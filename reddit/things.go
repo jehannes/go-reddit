@@ -574,8 +574,46 @@ type Post struct {
 	Removed     *bool   `json:"removed,omitempty"`
 	RemovedBy   *string `json:"removed_by"`
 	ModReasonBy *string `json:"mod_reason_by"`
+
+	
+	// Gallery related fields
+	IsGallery     bool                          `json:"is_gallery"`
+	MediaMetadata map[string]*MediaMetadataItem `json:"media_metadata"`
+	GalleryData   *GalleryData                  `json:"gallery_data"`
 }
 
+// MediaMetadataItem represents metadata for a media item in a gallery or post
+type MediaMetadataItem struct {
+	Status string `json:"status"`
+	E      string `json:"e"` // media type, e.g., "Image", "AnimatedImage", "RedditVideo"
+	M      string `json:"m"` // MIME type, e.g., "image/jpg", "image/png", "image/gif"
+	P      []struct {
+		Y int    `json:"y"` // height
+		X int    `json:"x"` // width
+		U string `json:"u"` // URL
+	} `json:"p"` // preview images
+	S struct {
+		Y   int    `json:"y"`             // height
+		X   int    `json:"x"`             // width
+		U   string `json:"u"`             // URL
+		GIF string `json:"gif,omitempty"` // GIF URL for animated images
+		MP4 string `json:"mp4,omitempty"` // MP4 URL for videos
+	} `json:"s"` // source image/video
+	ID string `json:"id"` // media ID
+}
+
+// GalleryData represents the gallery data structure containing ordered media items
+type GalleryData struct {
+	Items []GalleryItem `json:"items"`
+}
+
+// GalleryItem represents a single item in a gallery
+type GalleryItem struct {
+	MediaID     string `json:"media_id"`
+	ID          int    `json:"id"`
+	Caption     string `json:"caption,omitempty"`
+	OutboundURL string `json:"outbound_url,omitempty"`
+}
 // Subreddit holds information about a subreddit
 type Subreddit struct {
 	ID      string     `json:"id,omitempty"`
