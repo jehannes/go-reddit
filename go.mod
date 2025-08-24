@@ -1,4 +1,4 @@
-module github.com/Sadzeih/go-reddit
+module github.com/jehannes/go-reddit
 
 go 1.15
 

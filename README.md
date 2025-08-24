@@ -6,9 +6,9 @@
 
 <div id='badges' align='center'>
 
-[![Actions Status](https://github.com/Sadzeih/go-reddit/workflows/tests/badge.svg)](https://github.com/Sadzeih/go-reddit/actions)
-[![Go Report Card](https://goreportcard.com/badge/github.com/Sadzeih/go-reddit)](https://goreportcard.com/report/github.com/Sadzeih/go-reddit)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/Sadzeih/go-reddit/v2/reddit)](https://pkg.go.dev/github.com/Sadzeih/go-reddit/v2/reddit)
+[![Actions Status](https://github.com/jehannes/go-reddit/workflows/tests/badge.svg)](https://github.com/jehannes/go-reddit/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jehannes/go-reddit)](https://goreportcard.com/report/github.com/jehannes/go-reddit)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/jehannes/go-reddit/reddit)](https://pkg.go.dev/github.com/jehannes/go-reddit/reddit)
 
 </div>
 
@@ -35,16 +35,16 @@ Here are the differences from the upstream:
 
 ## Install
 
-To get a specific version from the list of [versions](https://github.com/Sadzeih/go-reddit/releases):
+To get a specific version from the list of [versions](https://github.com/jehannes/go-reddit/releases):
 
 ```sh
-go get github.com/Sadzeih/go-reddit@vX.Y.Z
+go get github.com/jehannes/go-reddit@vX.Y.Z
 ```
 
 Or for the latest version:
 
 ```sh
-go get github.com/Sadzeih/go-reddit
+go get github.com/jehannes/go-reddit
 ```
 
 The repository structure for managing multiple major versions follows the one outlined [here](https://github.com/go-modules-by-example/index/tree/master/016_major_version_repo_strategy#major-branch-strategy).
@@ -56,7 +56,7 @@ Make sure to have a Reddit app with a valid client id and secret. [Here](https:/
 ```go
 package main
 
-import "github.com/Sadzeih/go-reddit/reddit"
+import "github.com/jehannes/go-reddit/reddit"
 
 func main() {
     credentials := reddit.Credentials{ID: "id", Secret: "secret", Username: "username", Password: "password"}
