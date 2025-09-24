@@ -596,7 +596,6 @@ type Post struct {
 	RemovedBy   *string `json:"removed_by"`
 	ModReasonBy *string `json:"mod_reason_by"`
 
-	
 	// Gallery related fields
 	IsGallery     bool                          `json:"is_gallery"`
 	MediaMetadata map[string]*MediaMetadataItem `json:"media_metadata"`
@@ -638,6 +637,7 @@ type GalleryItem struct {
 	Caption     string `json:"caption,omitempty"`
 	OutboundURL string `json:"outbound_url,omitempty"`
 }
+
 // Subreddit holds information about a subreddit
 type Subreddit struct {
 	ID      string     `json:"id,omitempty"`
