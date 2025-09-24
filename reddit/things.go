@@ -518,6 +518,27 @@ type More struct {
 	Children []string `json:"children"`
 }
 
+// PreviewImage represents a preview image with various resolutions
+type PreviewImage struct {
+	Source      ImageSource   `json:"source"`
+	Resolutions []ImageSource `json:"resolutions"`
+	Variants    interface{}   `json:"variants"` // Can contain various formats, kept as interface{}
+	ID          string        `json:"id"`
+}
+
+// ImageSource represents an image URL with dimensions
+type ImageSource struct {
+	URL    string `json:"url"`
+	Width  int    `json:"width"`
+	Height int    `json:"height"`
+}
+
+// Preview represents the preview images for a post
+type Preview struct {
+	Images  []PreviewImage `json:"images"`
+	Enabled bool           `json:"enabled"`
+}
+
 // Post is a submitted post on Reddit.
 type Post struct {
 	ID      string     `json:"id,omitempty"`
@@ -580,6 +601,9 @@ type Post struct {
 	IsGallery     bool                          `json:"is_gallery"`
 	MediaMetadata map[string]*MediaMetadataItem `json:"media_metadata"`
 	GalleryData   *GalleryData                  `json:"gallery_data"`
+
+	// Preview images for the post
+	Preview *Preview `json:"preview,omitempty"`
 }
 
 // MediaMetadataItem represents metadata for a media item in a gallery or post
