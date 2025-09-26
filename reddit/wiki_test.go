@@ -71,8 +71,15 @@ var expectedWikiPageDiscussions = []*Post{
 		SubredditID:           "t5_2uquw1",
 		SubredditSubscribers:  2,
 
-		Author:   "v_95",
-		AuthorID: "t2_164ab8",
+		Author:                "v_95",
+		AuthorID:              "t2_164ab8",
+		AuthorFlair:           String("test :karma:"),
+		AuthorFlairTemplateID: String("3ec5dbec-d986-11ea-ac0f-0eaf0635e607"),
+		Spam:                  Bool(false),
+		Approved:              Bool(false),
+		Removed:               Bool(false),
+		CanModPost:            true,
+		IsCrosspostable:       false,
 	},
 }
 

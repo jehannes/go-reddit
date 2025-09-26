@@ -36,7 +36,8 @@ var expectedListingPosts = []*Post{
 		Author:   "v_95",
 		AuthorID: "t2_164ab8",
 
-		IsSelfPost: true,
+		IsSelfPost:      true,
+		IsCrosspostable: true,
 	},
 }
 
@@ -112,7 +113,8 @@ var expectedListingPosts2 = []*Post{
 		Author:   "v_95",
 		AuthorID: "t2_164ab8",
 
-		IsSelfPost: true,
+		IsSelfPost:      true,
+		IsCrosspostable: true,
 	},
 	{
 		ID:      "i2gvs1",
@@ -135,8 +137,9 @@ var expectedListingPosts2 = []*Post{
 		SubredditID:           "t5_2qh23",
 		SubredditSubscribers:  8201,
 
-		Author:   "v_95",
-		AuthorID: "t2_164ab8",
+		Author:          "v_95",
+		AuthorID:        "t2_164ab8",
+		IsCrosspostable: true,
 	},
 }
 

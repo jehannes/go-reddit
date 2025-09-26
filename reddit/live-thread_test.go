@@ -124,8 +124,10 @@ var expectedLiveThreadDiscussions = []*Post{
 		SubredditID:           "t5_32o7w",
 		SubredditSubscribers:  24501,
 
-		Author:   "TestUser",
-		AuthorID: "t2_test1",
+		Author:          "TestUser",
+		AuthorID:        "t2_test1",
+		Flair:           "LIVE THREAD",
+		IsCrosspostable: true,
 	},
 	{
 		ID:      "test2",
@@ -147,8 +149,12 @@ var expectedLiveThreadDiscussions = []*Post{
 		SubredditID:           "t5_32o7w",
 		SubredditSubscribers:  24501,
 
-		Author:   "TestUser",
-		AuthorID: "t2_test1",
+		Author:          "TestUser",
+		AuthorID:        "t2_test1",
+		Flair:           "LIVE THREAD CLOSED | No further updates.",
+		FlairTemplateID: String("9b12fc60-ff01-11e3-b179-12313b0a9e38"),
+		FlairCSSClass:   String("diss"),
+		IsCrosspostable: true,
 	},
 }
 
