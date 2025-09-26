@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -399,7 +398,7 @@ func (c *Client) checkRateLimitBeforeDo(req *http.Request) *RateLimitError {
 			StatusCode: http.StatusTooManyRequests,
 			Request:    req,
 			Header:     make(http.Header),
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 		}
 		return &RateLimitError{
 			Rate:     rate,
@@ -452,7 +451,7 @@ func CheckResponse(r *http.Response) error {
 
 	jsonErrorResponse := &JSONErrorResponse{Response: r}
 
-	data, err := ioutil.ReadAll(r.Body)
+	data, err := io.ReadAll(r.Body)
 	if err == nil && len(data) > 0 {
 		json.Unmarshal(data, jsonErrorResponse)
 		if len(jsonErrorResponse.JSON.Errors) > 0 {
@@ -461,14 +460,14 @@ func CheckResponse(r *http.Response) error {
 	}
 
 	// reset response body
-	r.Body = ioutil.NopCloser(bytes.NewBuffer(data))
+	r.Body = io.NopCloser(bytes.NewBuffer(data))
 
 	if c := r.StatusCode; c >= 200 && c <= 299 {
 		return nil
 	}
 
 	errorResponse := &ErrorResponse{Response: r}
-	data, err = ioutil.ReadAll(r.Body)
+	data, err = io.ReadAll(r.Body)
 	if err == nil && len(data) > 0 {
 		err := json.Unmarshal(data, errorResponse)
 		if err != nil {

@@ -72,7 +72,12 @@ var expectedPost = &Post{
 	Author:   "v_95",
 	AuthorID: "t2_164ab8",
 
-	IsSelfPost: true,
+	Flair:           "Reddit API",
+	FlairTemplateID: String("c4edd5ce-40e8-11e7-b814-0ef91bd65558"),
+	FlairCSSClass:   String(""),
+
+	IsSelfPost:      true,
+	IsCrosspostable: true,
 }
 
 var expectedComment = &Comment{
