@@ -26,6 +26,7 @@ var expectedPosts = []*Post{
 
 		Title: "test",
 		Body:  "test",
+		PostHint: "",
 
 		Score:            253,
 		UpvoteRatio:      0.99,
@@ -40,6 +41,7 @@ var expectedPosts = []*Post{
 		AuthorID: "t2_30a5ktgt",
 
 		IsSelfPost:      true,
+		IsVideo:         false,
 		Stickied:        true,
 		Archived:        true,
 		IsCrosspostable: true,
@@ -54,6 +56,7 @@ var expectedPosts = []*Post{
 		URL:       "https://i.imgur.com/LrN2mPw.jpg",
 
 		Title: "Veggies",
+		PostHint: "image",
 
 		Score:            4,
 		UpvoteRatio:      1,
@@ -68,6 +71,7 @@ var expectedPosts = []*Post{
 		AuthorID: "t2_6fqntbwq",
 
 		Archived:        false,
+		IsVideo:         false,
 		IsCrosspostable: true,
 		Preview: &Preview{Images: []PreviewImage{{
 			Source: ImageSource{URL: "https://external-preview.redd.it/ljFZZBn60orDIFTvDbPCXM-Thg9XsXAVm5kmH62gxKw.png?auto=webp&amp;s=f5103946eee4586cba8a1ba410e3098e9a14bb58", Width: 720, Height: 859},
@@ -175,11 +179,13 @@ var expectedSearchPosts = []*Post{
 		Created:         &Timestamp{time.Date(2020, 7, 26, 18, 14, 24, 0, time.UTC)},
 		Edited:          &Timestamp{time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)},
 		IsCrosspostable: true,
+		IsVideo:         true,
 
 		Permalink: "/r/WatchPeopleDieInside/comments/hybow9/pregnancy_test/",
 		URL:       "https://v.redd.it/ra4qnt8bt8d51",
 
 		Title: "Pregnancy test",
+		PostHint: "hosted:video",
 
 		Score:            103829,
 		UpvoteRatio:      0.88,
@@ -230,11 +236,13 @@ var expectedSearchPosts = []*Post{
 		Created:         &Timestamp{time.Date(2020, 7, 7, 15, 19, 42, 0, time.UTC)},
 		Edited:          &Timestamp{time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)},
 		IsCrosspostable: true,
+		IsVideo:         false,
 
 		Permalink: "/r/worldnews/comments/hmwhd7/brazilian_president_jair_bolsonaro_tests_positive/",
 		URL:       "https://www.theguardian.com/world/2020/jul/07/jair-bolsonaro-coronavirus-positive-test-brazil-president",
 
 		Title: "Brazilian president Jair Bolsonaro tests positive for coronavirus",
+		PostHint: "link",
 
 		Score:            149238,
 		UpvoteRatio:      0.94,
