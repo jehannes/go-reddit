@@ -610,19 +610,19 @@ type Post struct {
 // MediaMetadataItem represents metadata for a media item in a gallery or post
 type MediaMetadataItem struct {
 	Status string `json:"status"`
-	E      string `json:"e"` // media type, e.g., "Image", "AnimatedImage", "RedditVideo"
-	M      string `json:"m"` // MIME type, e.g., "image/jpg", "image/png", "image/gif"
-	P      []struct {
-		Y int    `json:"y"` // height
-		X int    `json:"x"` // width
-		U string `json:"u"` // URL
+	MediaType      string `json:"e"` // media type, e.g., "Image", "AnimatedImage", "RedditVideo"
+	MimeType      string `json:"m"` // MIME type, e.g., "image/jpg", "image/png", "image/gif"
+	PreviewImages      []struct {
+		Height int    `json:"y"` // height
+		Width  int    `json:"x"` // width
+		URL    string `json:"u"` // URL
 	} `json:"p"` // preview images
-	S struct {
-		Y   int    `json:"y"`             // height
-		X   int    `json:"x"`             // width
-		U   string `json:"u"`             // URL
-		GIF string `json:"gif,omitempty"` // GIF URL for animated images
-		MP4 string `json:"mp4,omitempty"` // MP4 URL for videos
+	Source struct {
+		Height   int    `json:"y"`             // height
+		Width    int    `json:"x"`             // width
+		URL     string `json:"u"`             // URL
+		GIF     string `json:"gif,omitempty"` // GIF URL for animated images
+		MP4    string `json:"mp4,omitempty"` // MP4 URL for videos
 	} `json:"s"` // source image/video
 	ID string `json:"id"` // media ID
 }
