@@ -106,26 +106,28 @@ func TestPostMediaMetadata(t *testing.T) {
 		t.Fatal("Expected to find media item abc123def456")
 	}
 
-	if firstMedia.E != "Image" {
-		t.Errorf("Expected media type Image, got %s", firstMedia.E)
+	if firstMedia.MediaType != "Image" {
+		t.Errorf("Expected media type Image, got %s", firstMedia.MediaType)
 	}
 
-	if firstMedia.M != "image/jpg" {
-		t.Errorf("Expected MIME type image/jpg, got %s", firstMedia.M)
+	if firstMedia.MimeType != "image/jpg" {
+		t.Errorf("Expected MIME type image/jpg, got %s", firstMedia.MimeType)
 	}
 
 	// Test media source URL access
-	if firstMedia.S.U != "https://i.redd.it/abc123def456.jpg" {
-		t.Errorf("Expected source URL https://i.redd.it/abc123def456.jpg, got %s", firstMedia.S.U)
+	expectedSourceURL := "https://i.redd.it/abc123def456.jpg"
+	if firstMedia.Source.URL != expectedSourceURL {
+		t.Errorf("Expected source URL %s, got %s", expectedSourceURL, firstMedia.Source.URL)
 	}
 
 	// Test preview images
-	if len(firstMedia.P) != 2 {
-		t.Errorf("Expected 2 preview images, got %d", len(firstMedia.P))
+	if len(firstMedia.PreviewImages) != 2 {
+		t.Errorf("Expected 2 preview images, got %d", len(firstMedia.PreviewImages))
 	}
 
-	if len(firstMedia.P) > 0 && firstMedia.P[0].U != "https://preview.redd.it/abc123def456.jpg?width=108" {
-		t.Errorf("Expected first preview URL https://preview.redd.it/abc123def456.jpg?width=108, got %s", firstMedia.P[0].U)
+	expectedPreviewURL := "https://preview.redd.it/abc123def456.jpg?width=108"
+	if len(firstMedia.PreviewImages) > 0 && firstMedia.PreviewImages[0].URL != expectedPreviewURL {
+		t.Errorf("Expected first preview URL %s, got %s", expectedPreviewURL, firstMedia.PreviewImages[0].URL)
 	}
 
 	// Test animated media
@@ -134,12 +136,13 @@ func TestPostMediaMetadata(t *testing.T) {
 		t.Fatal("Expected to find animated media item xyz789ghi012")
 	}
 
-	if animatedMedia.E != "AnimatedImage" {
+	if animatedMedia.MediaType != "AnimatedImage" {
 		t.Error("Expected animated media to have type AnimatedImage")
 	}
 
-	if animatedMedia.S.MP4 != "https://v.redd.it/xyz789ghi012.mp4" {
-		t.Errorf("Expected MP4 URL https://v.redd.it/xyz789ghi012.mp4, got %s", animatedMedia.S.MP4)
+	expectedMP4URL := "https://v.redd.it/xyz789ghi012.mp4"
+	if animatedMedia.Source.MP4 != expectedMP4URL {
+		t.Errorf("Expected MP4 URL %s, got %s", expectedMP4URL, animatedMedia.Source.MP4)
 	}
 
 	// Test GalleryData
