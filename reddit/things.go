@@ -549,8 +549,9 @@ type Post struct {
 	Permalink string `json:"permalink,omitempty"`
 	URL       string `json:"url,omitempty"`
 
-	Title string `json:"title,omitempty"`
-	Body  string `json:"selftext,omitempty"`
+	Title    string `json:"title,omitempty"`
+	Body     string `json:"selftext,omitempty"`
+	PostHint string `json:"post_hint,omitempty"`
 
 	Flair                 string  `json:"link_flair_text,omitempty"`
 	FlairTemplateID       *string `json:"link_flair_template_id,omitempty"`
@@ -578,6 +579,7 @@ type Post struct {
 	Spoiler         bool  `json:"spoiler"`
 	Locked          bool  `json:"locked"`
 	NSFW            bool  `json:"over_18"`
+	IsVideo         bool  `json:"is_video"`
 	IsSelfPost      bool  `json:"is_self"`
 	Saved           bool  `json:"saved"`
 	Stickied        bool  `json:"stickied"`
