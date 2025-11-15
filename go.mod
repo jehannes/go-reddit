@@ -1,12 +1,12 @@
 module github.com/jehannes/go-reddit
 
-go 1.25
+go 1.25.4
 
 require (
 	github.com/google/go-querystring v1.1.0
-	github.com/stretchr/testify v1.10.0
-	golang.org/x/net v0.43.0
-	golang.org/x/oauth2 v0.30.0
+	github.com/stretchr/testify v1.11.1
+	golang.org/x/net v0.47.0
+	golang.org/x/oauth2 v0.33.0
 )
 
 require (
