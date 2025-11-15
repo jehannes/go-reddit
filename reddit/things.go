@@ -518,6 +518,27 @@ type More struct {
 	Children []string `json:"children"`
 }
 
+// PreviewImage represents a preview image with various resolutions
+type PreviewImage struct {
+	Source      ImageSource   `json:"source"`
+	Resolutions []ImageSource `json:"resolutions"`
+	Variants    interface{}   `json:"variants"` // Can contain various formats, kept as interface{}
+	ID          string        `json:"id"`
+}
+
+// ImageSource represents an image URL with dimensions
+type ImageSource struct {
+	URL    string `json:"url"`
+	Width  int    `json:"width"`
+	Height int    `json:"height"`
+}
+
+// Preview represents the preview images for a post
+type Preview struct {
+	Images  []PreviewImage `json:"images"`
+	Enabled bool           `json:"enabled"`
+}
+
 // Post is a submitted post on Reddit.
 type Post struct {
 	ID      string     `json:"id,omitempty"`
@@ -528,8 +549,9 @@ type Post struct {
 	Permalink string `json:"permalink,omitempty"`
 	URL       string `json:"url,omitempty"`
 
-	Title string `json:"title,omitempty"`
-	Body  string `json:"selftext,omitempty"`
+	Title    string `json:"title,omitempty"`
+	Body     string `json:"selftext,omitempty"`
+	PostHint string `json:"post_hint,omitempty"`
 
 	Flair                 string  `json:"link_flair_text,omitempty"`
 	FlairTemplateID       *string `json:"link_flair_template_id,omitempty"`
@@ -557,6 +579,7 @@ type Post struct {
 	Spoiler         bool  `json:"spoiler"`
 	Locked          bool  `json:"locked"`
 	NSFW            bool  `json:"over_18"`
+	IsVideo         bool  `json:"is_video"`
 	IsSelfPost      bool  `json:"is_self"`
 	Saved           bool  `json:"saved"`
 	Stickied        bool  `json:"stickied"`
@@ -575,29 +598,31 @@ type Post struct {
 	RemovedBy   *string `json:"removed_by"`
 	ModReasonBy *string `json:"mod_reason_by"`
 
-	
 	// Gallery related fields
 	IsGallery     bool                          `json:"is_gallery"`
 	MediaMetadata map[string]*MediaMetadataItem `json:"media_metadata"`
 	GalleryData   *GalleryData                  `json:"gallery_data"`
+
+	// Preview images for the post
+	Preview *Preview `json:"preview,omitempty"`
 }
 
 // MediaMetadataItem represents metadata for a media item in a gallery or post
 type MediaMetadataItem struct {
 	Status string `json:"status"`
-	E      string `json:"e"` // media type, e.g., "Image", "AnimatedImage", "RedditVideo"
-	M      string `json:"m"` // MIME type, e.g., "image/jpg", "image/png", "image/gif"
-	P      []struct {
-		Y int    `json:"y"` // height
-		X int    `json:"x"` // width
-		U string `json:"u"` // URL
+	MediaType      string `json:"e"` // media type, e.g., "Image", "AnimatedImage", "RedditVideo"
+	MimeType      string `json:"m"` // MIME type, e.g., "image/jpg", "image/png", "image/gif"
+	PreviewImages      []struct {
+		Height int    `json:"y"` // height
+		Width  int    `json:"x"` // width
+		URL    string `json:"u"` // URL
 	} `json:"p"` // preview images
-	S struct {
-		Y   int    `json:"y"`             // height
-		X   int    `json:"x"`             // width
-		U   string `json:"u"`             // URL
-		GIF string `json:"gif,omitempty"` // GIF URL for animated images
-		MP4 string `json:"mp4,omitempty"` // MP4 URL for videos
+	Source struct {
+		Height   int    `json:"y"`             // height
+		Width    int    `json:"x"`             // width
+		URL     string `json:"u"`             // URL
+		GIF     string `json:"gif,omitempty"` // GIF URL for animated images
+		MP4    string `json:"mp4,omitempty"` // MP4 URL for videos
 	} `json:"s"` // source image/video
 	ID string `json:"id"` // media ID
 }
@@ -614,6 +639,7 @@ type GalleryItem struct {
 	Caption     string `json:"caption,omitempty"`
 	OutboundURL string `json:"outbound_url,omitempty"`
 }
+
 // Subreddit holds information about a subreddit
 type Subreddit struct {
 	ID      string     `json:"id,omitempty"`

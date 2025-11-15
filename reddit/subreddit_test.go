@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -27,6 +26,7 @@ var expectedPosts = []*Post{
 
 		Title: "test",
 		Body:  "test",
+		PostHint: "",
 
 		Score:            253,
 		UpvoteRatio:      0.99,
@@ -40,8 +40,11 @@ var expectedPosts = []*Post{
 		Author:   "kmiller0112",
 		AuthorID: "t2_30a5ktgt",
 
-		IsSelfPost: true,
-		Stickied:   true,
+		IsSelfPost:      true,
+		IsVideo:         false,
+		Stickied:        true,
+		Archived:        true,
+		IsCrosspostable: true,
 	},
 	{
 		ID:      "hyhquk",
@@ -53,6 +56,7 @@ var expectedPosts = []*Post{
 		URL:       "https://i.imgur.com/LrN2mPw.jpg",
 
 		Title: "Veggies",
+		PostHint: "image",
 
 		Score:            4,
 		UpvoteRatio:      1,
@@ -65,6 +69,21 @@ var expectedPosts = []*Post{
 
 		Author:   "MuckleMcDuckle",
 		AuthorID: "t2_6fqntbwq",
+
+		Archived:        false,
+		IsVideo:         false,
+		IsCrosspostable: true,
+		Preview: &Preview{Images: []PreviewImage{{
+			Source: ImageSource{URL: "https://external-preview.redd.it/ljFZZBn60orDIFTvDbPCXM-Thg9XsXAVm5kmH62gxKw.png?auto=webp&amp;s=f5103946eee4586cba8a1ba410e3098e9a14bb58", Width: 720, Height: 859},
+			Resolutions: []ImageSource{
+				{URL: "https://external-preview.redd.it/ljFZZBn60orDIFTvDbPCXM-Thg9XsXAVm5kmH62gxKw.png?width=108&amp;crop=smart&amp;auto=webp&amp;s=a6904af790568dcea8fd3566e5d469df88a3891d", Width: 108, Height: 128},
+				{URL: "https://external-preview.redd.it/ljFZZBn60orDIFTvDbPCXM-Thg9XsXAVm5kmH62gxKw.png?width=216&amp;crop=smart&amp;auto=webp&amp;s=09720b85b3b469b37030db3e3a5ab7fa231480f9", Width: 216, Height: 257},
+				{URL: "https://external-preview.redd.it/ljFZZBn60orDIFTvDbPCXM-Thg9XsXAVm5kmH62gxKw.png?width=320&amp;crop=smart&amp;auto=webp&amp;s=78ace2e1c15e0e82dcfc95574d3ea3756812fd98", Width: 320, Height: 381},
+				{URL: "https://external-preview.redd.it/ljFZZBn60orDIFTvDbPCXM-Thg9XsXAVm5kmH62gxKw.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=d5d5305e3d97553176170ead8462cc0d155a7793", Width: 640, Height: 763},
+			},
+			Variants: map[string]interface{}{},
+			ID:       "bxde3rpzP-mqawZJwpBIzEiH1y9nOLW3n1ghq9FPAR8",
+		}}, Enabled: true},
 	},
 }
 
@@ -155,15 +174,18 @@ var expectedSubredditNames = []string{
 
 var expectedSearchPosts = []*Post{
 	{
-		ID:      "hybow9",
-		FullID:  "t3_hybow9",
-		Created: &Timestamp{time.Date(2020, 7, 26, 18, 14, 24, 0, time.UTC)},
-		Edited:  &Timestamp{time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)},
+		ID:              "hybow9",
+		FullID:          "t3_hybow9",
+		Created:         &Timestamp{time.Date(2020, 7, 26, 18, 14, 24, 0, time.UTC)},
+		Edited:          &Timestamp{time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)},
+		IsCrosspostable: true,
+		IsVideo:         true,
 
 		Permalink: "/r/WatchPeopleDieInside/comments/hybow9/pregnancy_test/",
 		URL:       "https://v.redd.it/ra4qnt8bt8d51",
 
 		Title: "Pregnancy test",
+		PostHint: "hosted:video",
 
 		Score:            103829,
 		UpvoteRatio:      0.88,
@@ -176,21 +198,58 @@ var expectedSearchPosts = []*Post{
 
 		Author:   "chocolat_ice_cream",
 		AuthorID: "t2_3p32m02",
+
+		Preview: &Preview{
+			Images: []PreviewImage{
+				{
+					Source: ImageSource{
+						URL:    "https://external-preview.redd.it/OcR_yQzvFMo4upwEVJe0naWpvA3cmyBpucsJF2OvhLA.png?format=pjpg&amp;auto=webp&amp;s=dbe1004d6df4fb6014d78e0c0d817c1106f1f3b2",
+						Width:  360,
+						Height: 360,
+					},
+					Resolutions: []ImageSource{
+						{
+							URL:    "https://external-preview.redd.it/OcR_yQzvFMo4upwEVJe0naWpvA3cmyBpucsJF2OvhLA.png?width=108&amp;crop=smart&amp;format=pjpg&amp;auto=webp&amp;s=3de4a7249f291b848838f865bb592f7e51555e96",
+							Width:  108,
+							Height: 108,
+						},
+						{
+							URL:    "https://external-preview.redd.it/OcR_yQzvFMo4upwEVJe0naWpvA3cmyBpucsJF2OvhLA.png?width=216&amp;crop=smart&amp;format=pjpg&amp;auto=webp&amp;s=531916387899ed20e33386081b5d5c58a73be188",
+							Width:  216,
+							Height: 216,
+						},
+						{
+							URL:    "https://external-preview.redd.it/OcR_yQzvFMo4upwEVJe0naWpvA3cmyBpucsJF2OvhLA.png?width=320&amp;crop=smart&amp;format=pjpg&amp;auto=webp&amp;s=4d19996fba95dae7fb615cdc102d34c8bfb44e0a",
+							Width:  320,
+							Height: 320,
+						},
+					},
+					Variants: map[string]interface{}{},
+					ID:       "6MEEtWN_cm1lRDpu_daXxHcau23YIWh0FeiB96IPgJs",
+				},
+			},
+		},
 	},
 	{
-		ID:      "hmwhd7",
-		FullID:  "t3_hmwhd7",
-		Created: &Timestamp{time.Date(2020, 7, 7, 15, 19, 42, 0, time.UTC)},
-		Edited:  &Timestamp{time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)},
+		ID:              "hmwhd7",
+		FullID:          "t3_hmwhd7",
+		Created:         &Timestamp{time.Date(2020, 7, 7, 15, 19, 42, 0, time.UTC)},
+		Edited:          &Timestamp{time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)},
+		IsCrosspostable: true,
+		IsVideo:         false,
 
 		Permalink: "/r/worldnews/comments/hmwhd7/brazilian_president_jair_bolsonaro_tests_positive/",
 		URL:       "https://www.theguardian.com/world/2020/jul/07/jair-bolsonaro-coronavirus-positive-test-brazil-president",
 
 		Title: "Brazilian president Jair Bolsonaro tests positive for coronavirus",
+		PostHint: "link",
 
 		Score:            149238,
 		UpvoteRatio:      0.94,
 		NumberOfComments: 7415,
+
+		Flair:         "COVID-19",
+		FlairCSSClass: String("coronavirus"),
 
 		SubredditName:         "worldnews",
 		SubredditNamePrefixed: "r/worldnews",
@@ -199,6 +258,52 @@ var expectedSearchPosts = []*Post{
 
 		Author:   "Jeremy_Martin",
 		AuthorID: "t2_wgrkg",
+
+		Preview: &Preview{
+			Images: []PreviewImage{
+				{
+					Source: ImageSource{
+						URL:    "https://external-preview.redd.it/OIVJopP4J8t4KzYcr7bjitC4Xd8CVbOHdNJcyz27viw.jpg?auto=webp&amp;s=bcb266e3d2f9b1b8410b8ebc1ba112461ac7c89b",
+						Width:  1200,
+						Height: 630,
+					},
+					Resolutions: []ImageSource{
+						{
+							URL:    "https://external-preview.redd.it/OIVJopP4J8t4KzYcr7bjitC4Xd8CVbOHdNJcyz27viw.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=8cd17cff83d56ad74566088b46a5f656c4e6233b",
+							Width:  108,
+							Height: 56,
+						},
+						{
+							URL:    "https://external-preview.redd.it/OIVJopP4J8t4KzYcr7bjitC4Xd8CVbOHdNJcyz27viw.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=279340e68ef64a890709218d27e805e40ef2d1d5",
+							Width:  216,
+							Height: 113,
+						},
+						{
+							URL:    "https://external-preview.redd.it/OIVJopP4J8t4KzYcr7bjitC4Xd8CVbOHdNJcyz27viw.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=a57f95db845046e7d75af256fed8a2fab65dec60",
+							Width:  320,
+							Height: 168,
+						},
+						{
+							URL:    "https://external-preview.redd.it/OIVJopP4J8t4KzYcr7bjitC4Xd8CVbOHdNJcyz27viw.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=6fc8a7055610d03faaa3b0f32ba521a99b5c2bdd",
+							Width:  640,
+							Height: 336,
+						},
+						{
+							URL:    "https://external-preview.redd.it/OIVJopP4J8t4KzYcr7bjitC4Xd8CVbOHdNJcyz27viw.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=be77436ac80c45b2153de325008085920d8d8489",
+							Width:  960,
+							Height: 504,
+						},
+						{
+							URL:    "https://external-preview.redd.it/OIVJopP4J8t4KzYcr7bjitC4Xd8CVbOHdNJcyz27viw.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=71644306bcb0036f2d8ee5bf878e3c78f6c3012c",
+							Width:  1080,
+							Height: 567,
+						},
+					},
+					Variants: map[string]interface{}{},
+					ID:       "Ug52cYq0iihKhNVnhJnu_b8ThcVTp27Yjit2korgoUo",
+				},
+			},
+		},
 	},
 }
 
@@ -359,6 +464,8 @@ var expectedSubredditSettings = &SubredditSettings{
 	AllowOriginalContent:       Bool(false),
 	AllowImages:                Bool(true),
 	AllowMultipleImagesPerPost: Bool(true),
+	AllowVideos:                Bool(true),
+	AllowPredictions:           Bool(false),
 
 	ExcludeSitewideBannedUsersContent: Bool(false),
 
@@ -1361,7 +1468,7 @@ func TestSubredditService_RemoveMobileIcon(t *testing.T) {
 func TestSubredditService_UploadImage(t *testing.T) {
 	client, mux := setup(t)
 
-	imageFile, err := ioutil.TempFile("/tmp", "emoji*.png")
+	imageFile, err := os.CreateTemp(os.TempDir(), "emoji*.png")
 	require.NoError(t, err)
 	defer func() {
 		imageFile.Close()
@@ -1407,7 +1514,7 @@ func TestSubredditService_UploadImage(t *testing.T) {
 func TestSubredditService_UploadHeader(t *testing.T) {
 	client, mux := setup(t)
 
-	imageFile, err := ioutil.TempFile("/tmp", "emoji*.png")
+	imageFile, err := os.CreateTemp(os.TempDir(), "emoji*.png")
 	require.NoError(t, err)
 	defer func() {
 		imageFile.Close()
@@ -1453,7 +1560,7 @@ func TestSubredditService_UploadHeader(t *testing.T) {
 func TestSubredditService_UploadMobileHeader(t *testing.T) {
 	client, mux := setup(t)
 
-	imageFile, err := ioutil.TempFile("/tmp", "emoji*.png")
+	imageFile, err := os.CreateTemp(os.TempDir(), "emoji*.png")
 	require.NoError(t, err)
 	defer func() {
 		imageFile.Close()
@@ -1499,7 +1606,7 @@ func TestSubredditService_UploadMobileHeader(t *testing.T) {
 func TestSubredditService_UploadMobileIcon(t *testing.T) {
 	client, mux := setup(t)
 
-	imageFile, err := ioutil.TempFile("/tmp", "emoji*.jpg")
+	imageFile, err := os.CreateTemp(os.TempDir(), "emoji*.jpg")
 	require.NoError(t, err)
 	defer func() {
 		imageFile.Close()
@@ -1545,7 +1652,7 @@ func TestSubredditService_UploadMobileIcon(t *testing.T) {
 func TestSubredditService_UploadImage_Error(t *testing.T) {
 	client, mux := setup(t)
 
-	imageFile, err := ioutil.TempFile("/tmp", "emoji*.jpg")
+	imageFile, err := os.CreateTemp(os.TempDir(), "emoji*.jpg")
 	require.NoError(t, err)
 	defer func() {
 		imageFile.Close()
@@ -1563,7 +1670,10 @@ func TestSubredditService_UploadImage_Error(t *testing.T) {
 	})
 
 	_, _, err = client.Subreddit.UploadImage(ctx, "testsubreddit", "does-not-exist.jpg", "testname")
-	require.EqualError(t, err, "open does-not-exist.jpg: no such file or directory")
+	require.Error(t, err)
+	errMsg := err.Error()
+	require.Contains(t, errMsg, "does-not-exist.jpg")
+	require.True(t, strings.Contains(errMsg, "no such file or directory") || strings.Contains(errMsg, "The system cannot find the file"), errMsg)
 
 	_, _, err = client.Subreddit.UploadImage(ctx, "testsubreddit", imageFile.Name(), "testname")
 	require.EqualError(t, err, "could not upload image: error one; error two")
@@ -1593,6 +1703,8 @@ func TestSubredditService_Create(t *testing.T) {
 		form.Set("original_content_tag_enabled", "false")
 		form.Set("allow_images", "true")
 		form.Set("allow_galleries", "true")
+		form.Set("allow_videos", "true")
+		form.Set("allow_predictions", "false")
 		form.Set("exclude_banned_modqueue", "false")
 		form.Set("crowd_control_chat_level", "2")
 		form.Set("all_original_content", "false")
@@ -1653,6 +1765,8 @@ func TestSubredditService_Edit(t *testing.T) {
 		form.Set("original_content_tag_enabled", "false")
 		form.Set("allow_images", "true")
 		form.Set("allow_galleries", "true")
+		form.Set("allow_videos", "true")
+		form.Set("allow_predictions", "false")
 		form.Set("exclude_banned_modqueue", "false")
 		form.Set("crowd_control_chat_level", "2")
 		form.Set("all_original_content", "false")

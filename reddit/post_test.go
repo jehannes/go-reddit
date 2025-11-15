@@ -36,6 +36,7 @@ var expectedPostAndComments = &PostAndComments{
 		AuthorID: "t2_testuser",
 
 		IsSelfPost: true,
+		IsCrosspostable: true,
 	},
 	Comments: []*Comment{
 		{
@@ -130,6 +131,7 @@ var expectedEditedPost = &Post{
 
 	Spoiler:    true,
 	IsSelfPost: true,
+	IsCrosspostable: true,
 }
 
 var expectedPost2 = &Post{
@@ -156,6 +158,8 @@ var expectedPost2 = &Post{
 
 	Author:   "v_95",
 	AuthorID: "t2_164ab8",
+		
+	IsCrosspostable: true,
 }
 
 var expectedPostDuplicates = []*Post{
@@ -180,6 +184,9 @@ var expectedPostDuplicates = []*Post{
 		SubredditNamePrefixed: "r/test",
 		SubredditID:           "t5_2qh23",
 		SubredditSubscribers:  8278,
+
+		IsCrosspostable: true,
+		Archived:      true,// maybe make new posts on r/test and use those for testing?
 
 		Author:   "GarlicoinAccount",
 		AuthorID: "t2_d2v1r90",
@@ -208,6 +215,9 @@ var expectedPostDuplicates = []*Post{
 
 		Author:   "prog101",
 		AuthorID: "t2_8dyo",
+
+		IsCrosspostable: true,
+		Archived:      true,// maybe make new posts on r/test and use those for testing?
 	},
 }
 
