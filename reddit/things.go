@@ -539,6 +539,46 @@ type Preview struct {
 	Enabled bool           `json:"enabled"`
 }
 
+// Media represents embedded media (primarily Reddit-hosted video)
+type Media struct {
+	RedditVideo *RedditVideo `json:"reddit_video,omitempty"`
+	Type        string       `json:"type,omitempty"`
+	Oembed      *Oembed      `json:"oembed,omitempty"`
+}
+
+// RedditVideo represents a Reddit-hosted video
+type RedditVideo struct {
+	BitrateKbps       int    `json:"bitrate_kbps"`
+	FallbackURL       string `json:"fallback_url"`
+	HasAudio          bool   `json:"has_audio"`
+	Height            int    `json:"height"`
+	Width             int    `json:"width"`
+	ScrubberMediaURL  string `json:"scrubber_media_url"`
+	DashURL           string `json:"dash_url"`
+	Duration          int    `json:"duration"`
+	HLSURL            string `json:"hls_url"`
+	IsGif             bool   `json:"is_gif"`
+	TranscodingStatus string `json:"transcoding_status"`
+}
+
+// Oembed represents embedded content from external sources
+type Oembed struct {
+	ProviderURL     string `json:"provider_url,omitempty"`
+	Description     string `json:"description,omitempty"`
+	Title           string `json:"title,omitempty"`
+	Type            string `json:"type,omitempty"`
+	AuthorName      string `json:"author_name,omitempty"`
+	Height          int    `json:"height,omitempty"`
+	Width           int    `json:"width,omitempty"`
+	HTML            string `json:"html,omitempty"`
+	ThumbnailWidth  int    `json:"thumbnail_width,omitempty"`
+	Version         string `json:"version,omitempty"`
+	ProviderName    string `json:"provider_name,omitempty"`
+	ThumbnailURL    string `json:"thumbnail_url,omitempty"`
+	ThumbnailHeight int    `json:"thumbnail_height,omitempty"`
+	AuthorURL       string `json:"author_url,omitempty"`
+}
+
 // Post is a submitted post on Reddit.
 type Post struct {
 	ID      string     `json:"id,omitempty"`
@@ -605,23 +645,26 @@ type Post struct {
 
 	// Preview images for the post
 	Preview *Preview `json:"preview,omitempty"`
+
+	// Media contains video information for video posts
+	Media *Media `json:"media,omitempty"`
 }
 
 // MediaMetadataItem represents metadata for a media item in a gallery or post
 type MediaMetadataItem struct {
-	Status string `json:"status"`
-	MediaType      string `json:"e"` // media type, e.g., "Image", "AnimatedImage", "RedditVideo"
+	Status        string `json:"status"`
+	MediaType     string `json:"e"` // media type, e.g., "Image", "AnimatedImage", "RedditVideo"
 	MimeType      string `json:"m"` // MIME type, e.g., "image/jpg", "image/png", "image/gif"
-	PreviewImages      []struct {
+	PreviewImages []struct {
 		Height int    `json:"y"` // height
 		Width  int    `json:"x"` // width
 		URL    string `json:"u"` // URL
 	} `json:"p"` // preview images
 	Source struct {
-		Height   int    `json:"y"`             // height
-		Width    int    `json:"x"`             // width
-		URL     string `json:"u"`             // URL
-		GIF     string `json:"gif,omitempty"` // GIF URL for animated images
+		Height int    `json:"y"`             // height
+		Width  int    `json:"x"`             // width
+		URL    string `json:"u"`             // URL
+		GIF    string `json:"gif,omitempty"` // GIF URL for animated images
 		MP4    string `json:"mp4,omitempty"` // MP4 URL for videos
 	} `json:"s"` // source image/video
 	ID string `json:"id"` // media ID
