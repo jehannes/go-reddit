@@ -35,7 +35,7 @@ var expectedPostAndComments = &PostAndComments{
 		Author:   "testuser",
 		AuthorID: "t2_testuser",
 
-		IsSelfPost: true,
+		IsSelfPost:      true,
 		IsCrosspostable: true,
 	},
 	Comments: []*Comment{
@@ -129,8 +129,8 @@ var expectedEditedPost = &Post{
 	Author:   "v_95",
 	AuthorID: "t2_164ab8",
 
-	Spoiler:    true,
-	IsSelfPost: true,
+	Spoiler:         true,
+	IsSelfPost:      true,
 	IsCrosspostable: true,
 }
 
@@ -158,7 +158,7 @@ var expectedPost2 = &Post{
 
 	Author:   "v_95",
 	AuthorID: "t2_164ab8",
-		
+
 	IsCrosspostable: true,
 }
 
@@ -186,7 +186,7 @@ var expectedPostDuplicates = []*Post{
 		SubredditSubscribers:  8278,
 
 		IsCrosspostable: true,
-		Archived:      true,// maybe make new posts on r/test and use those for testing?
+		Archived:        true, // maybe make new posts on r/test and use those for testing?
 
 		Author:   "GarlicoinAccount",
 		AuthorID: "t2_d2v1r90",
@@ -217,7 +217,7 @@ var expectedPostDuplicates = []*Post{
 		AuthorID: "t2_8dyo",
 
 		IsCrosspostable: true,
-		Archived:      true,// maybe make new posts on r/test and use those for testing?
+		Archived:        true, // maybe make new posts on r/test and use those for testing?
 	},
 }
 
@@ -1142,4 +1142,75 @@ func TestPostService_Report(t *testing.T) {
 
 	_, err := client.Post.Report(ctx, "t3_test", "test reason")
 	require.NoError(t, err)
+}
+
+func TestPostService_GetWithMedia(t *testing.T) {
+	client, mux := setup(t)
+
+	blob, err := readFileContents("../testdata/post/video.json")
+	require.NoError(t, err)
+
+	mux.HandleFunc("/comments/1q6woyu", func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		fmt.Fprint(w, blob)
+	})
+
+	post, _, err := client.Post.Get(ctx, "1q6woyu")
+	require.NoError(t, err)
+	require.NotNil(t, post)
+
+	// Check that media field is properly parsed
+	require.NotNil(t, post.Post.Media)
+	require.NotNil(t, post.Post.Media.RedditVideo)
+
+	// Check RedditVideo fields from real Reddit video post
+	rv := post.Post.Media.RedditVideo
+	require.Equal(t, 2400, rv.BitrateKbps)
+	require.Equal(t, "https://v.redd.it/n8h8hskhr0cg1/CMAF_720.mp4?source=fallback", rv.FallbackURL)
+	require.Equal(t, true, rv.HasAudio)
+	require.Equal(t, 1280, rv.Height)
+	require.Equal(t, 720, rv.Width)
+	require.Equal(t, "https://v.redd.it/n8h8hskhr0cg1/CMAF_96.mp4", rv.ScrubberMediaURL)
+	require.Contains(t, rv.DashURL, "https://v.redd.it/n8h8hskhr0cg1/DASHPlaylist.mpd")
+	require.Equal(t, 6, rv.Duration)
+	require.Contains(t, rv.HLSURL, "https://v.redd.it/n8h8hskhr0cg1/HLSPlaylist.m3u8")
+	require.Equal(t, false, rv.IsGif)
+	require.Equal(t, "completed", rv.TranscodingStatus)
+}
+
+func TestPostService_GetWithOembed(t *testing.T) {
+	client, mux := setup(t)
+
+	blob, err := readFileContents("../testdata/post/oembed.json")
+	require.NoError(t, err)
+
+	mux.HandleFunc("/comments/88ll08", func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		fmt.Fprint(w, blob)
+	})
+
+	post, _, err := client.Post.Get(ctx, "88ll08")
+	require.NoError(t, err)
+	require.NotNil(t, post)
+
+	// Check that media field with oembed is properly parsed
+	require.NotNil(t, post.Post.Media)
+	require.NotNil(t, post.Post.Media.Oembed)
+	require.Equal(t, "youtube.com", post.Post.Media.Type)
+
+	// Check Oembed fields from real Reddit post 88ll08
+	oe := post.Post.Media.Oembed
+	require.Equal(t, "https://www.youtube.com/", oe.ProviderURL)
+	require.Equal(t, "Sinclair's script for stations", oe.Title)
+	require.Equal(t, "video", oe.Type)
+	require.Equal(t, "Andrew W (AWatts712)", oe.AuthorName)
+	require.Equal(t, 200, oe.Height)
+	require.Equal(t, 356, oe.Width)
+	require.Contains(t, oe.HTML, "iframe")
+	require.Equal(t, 480, oe.ThumbnailWidth)
+	require.Equal(t, "1.0", oe.Version)
+	require.Equal(t, "YouTube", oe.ProviderName)
+	require.Equal(t, "https://i.ytimg.com/vi/hWLjYJ4BzvI/hqdefault.jpg", oe.ThumbnailURL)
+	require.Equal(t, 360, oe.ThumbnailHeight)
+	require.Equal(t, "https://www.youtube.com/@AWatts420", oe.AuthorURL)
 }
