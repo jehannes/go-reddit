@@ -588,6 +588,7 @@ type Post struct {
 
 	Permalink string `json:"permalink,omitempty"`
 	URL       string `json:"url,omitempty"`
+	Domain    string `json:"domain,omitempty"`
 
 	Title    string `json:"title,omitempty"`
 	Body     string `json:"selftext,omitempty"`

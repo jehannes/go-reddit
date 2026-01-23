@@ -19,6 +19,7 @@ var expectedListingPosts = []*Post{
 
 		Permalink: "/r/test/comments/i2gvg4/this_is_a_title/",
 		URL:       "https://www.reddit.com/r/test/comments/i2gvg4/this_is_a_title/",
+		Domain:    "self.test",
 
 		Title: "This is a title",
 		Body:  "This is some text",
@@ -96,6 +97,7 @@ var expectedListingPosts2 = []*Post{
 
 		Permalink: "/r/test/comments/i2gvg4/this_is_a_title/",
 		URL:       "https://www.reddit.com/r/test/comments/i2gvg4/this_is_a_title/",
+		Domain:    "self.test",
 
 		Title: "This is a title",
 		Body:  "This is some text",
@@ -124,6 +126,7 @@ var expectedListingPosts2 = []*Post{
 
 		Permalink: "/r/test/comments/i2gvs1/this_is_a_title/",
 		URL:       "http://example.com",
+		Domain:    "example.com",
 
 		Title: "This is a title",
 

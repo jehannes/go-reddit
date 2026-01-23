@@ -57,6 +57,7 @@ var expectedWikiPageDiscussions = []*Post{
 
 		Permalink: "/r/helloworldtestt/comments/imj8g5/test/",
 		URL:       "https://www.reddit.com/r/helloworldtestt/wiki/index",
+		Domain:    "reddit.com",
 
 		Title: "test",
 

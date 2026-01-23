@@ -112,6 +112,7 @@ var expectedLiveThreadDiscussions = []*Post{
 
 		Permalink: "/r/live/comments/test1/test_title/",
 		URL:       "https://www.reddit.com/live/15nfp4mtfbo14/",
+		Domain:    "reddit.com",
 
 		Title: "test title",
 
@@ -128,6 +129,8 @@ var expectedLiveThreadDiscussions = []*Post{
 		AuthorID:        "t2_test1",
 		Flair:           "LIVE THREAD",
 		IsCrosspostable: true,
+
+		Media: &Media{Type: "liveupdate"},
 	},
 	{
 		ID:      "test2",
@@ -137,6 +140,7 @@ var expectedLiveThreadDiscussions = []*Post{
 
 		Permalink: "/r/live/comments/test2/test_title/",
 		URL:       "https://www.reddit.com/live/15nfp4mtfbo14/",
+		Domain:    "reddit.com",
 
 		Title: "test title",
 
@@ -155,6 +159,8 @@ var expectedLiveThreadDiscussions = []*Post{
 		FlairTemplateID: String("9b12fc60-ff01-11e3-b179-12313b0a9e38"),
 		FlairCSSClass:   String("diss"),
 		IsCrosspostable: true,
+
+		Media: &Media{Type: "liveupdate"},
 	},
 }
 
