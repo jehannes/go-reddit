@@ -23,9 +23,10 @@ var expectedPosts = []*Post{
 
 		Permalink: "/r/test/comments/agi5zf/test/",
 		URL:       "https://www.reddit.com/r/test/comments/agi5zf/test/",
+		Domain:    "self.test",
 
-		Title: "test",
-		Body:  "test",
+		Title:    "test",
+		Body:     "test",
 		PostHint: "",
 
 		Score:            253,
@@ -54,8 +55,9 @@ var expectedPosts = []*Post{
 
 		Permalink: "/r/test/comments/hyhquk/veggies/",
 		URL:       "https://i.imgur.com/LrN2mPw.jpg",
+		Domain:    "i.imgur.com",
 
-		Title: "Veggies",
+		Title:    "Veggies",
 		PostHint: "image",
 
 		Score:            4,
@@ -183,8 +185,9 @@ var expectedSearchPosts = []*Post{
 
 		Permalink: "/r/WatchPeopleDieInside/comments/hybow9/pregnancy_test/",
 		URL:       "https://v.redd.it/ra4qnt8bt8d51",
+		Domain:    "v.redd.it",
 
-		Title: "Pregnancy test",
+		Title:    "Pregnancy test",
 		PostHint: "hosted:video",
 
 		Score:            103829,
@@ -229,6 +232,20 @@ var expectedSearchPosts = []*Post{
 				},
 			},
 		},
+
+		Media: &Media{
+			RedditVideo: &RedditVideo{
+				FallbackURL:       "https://v.redd.it/ra4qnt8bt8d51/DASH_360.mp4?source=fallback",
+				Height:            360,
+				Width:             360,
+				ScrubberMediaURL:  "https://v.redd.it/ra4qnt8bt8d51/DASH_96.mp4",
+				DashURL:           "https://v.redd.it/ra4qnt8bt8d51/DASHPlaylist.mpd?a=1598576219%2CZjZhYTZlMTYxOTU2MjQzNTBlMmZmMjRiNDRlNDYxM2NjNjZiZjM2NzQxYTA5MTdhMGQyODBmNGJiYjYyOGFjMw%3D%3D&amp;v=1&amp;f=sd",
+				Duration:          230,
+				HLSURL:            "https://v.redd.it/ra4qnt8bt8d51/HLSPlaylist.m3u8?a=1598576219%2CNTlmNTJhZDAyMTY4ZDAzNmM1NzAxMTYxZTNmYTk1OTJkYzI3MWEyYjNmNDdmYWU2MWY5ZjUwMzFkODA2YWY1ZQ%3D%3D&amp;v=1&amp;f=sd",
+				IsGif:             false,
+				TranscodingStatus: "completed",
+			},
+		},
 	},
 	{
 		ID:              "hmwhd7",
@@ -240,8 +257,9 @@ var expectedSearchPosts = []*Post{
 
 		Permalink: "/r/worldnews/comments/hmwhd7/brazilian_president_jair_bolsonaro_tests_positive/",
 		URL:       "https://www.theguardian.com/world/2020/jul/07/jair-bolsonaro-coronavirus-positive-test-brazil-president",
+		Domain:    "theguardian.com",
 
-		Title: "Brazilian president Jair Bolsonaro tests positive for coronavirus",
+		Title:    "Brazilian president Jair Bolsonaro tests positive for coronavirus",
 		PostHint: "link",
 
 		Score:            149238,

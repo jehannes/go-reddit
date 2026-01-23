@@ -19,6 +19,7 @@ var expectedPostAndComments = &PostAndComments{
 
 		Permalink: "/r/test/comments/testpost/test/",
 		URL:       "https://www.reddit.com/r/test/comments/testpost/test/",
+		Domain:    "self.test",
 
 		Title: "Test",
 		Body:  "Hello",
@@ -111,6 +112,7 @@ var expectedEditedPost = &Post{
 
 	Permalink: "/r/test/comments/hw6l6a/test_title/",
 	URL:       "https://www.reddit.com/r/test/comments/hw6l6a/test_title/",
+	Domain:    "self.test",
 
 	Title: "Test Title",
 	Body:  "this is edited",
@@ -142,6 +144,7 @@ var expectedPost2 = &Post{
 
 	Permalink: "/r/test/comments/i2gvs1/this_is_a_title/",
 	URL:       "http://example.com",
+	Domain:    "example.com",
 
 	Title: "This is a title",
 
@@ -171,6 +174,7 @@ var expectedPostDuplicates = []*Post{
 
 		Permalink: "/r/test/comments/8kbs85/test/",
 		URL:       "http://example.com",
+		Domain:    "example.com",
 
 		Title: "test",
 
@@ -199,6 +203,7 @@ var expectedPostDuplicates = []*Post{
 
 		Permalink: "/r/test/comments/le1tc/test_to_see_if_this_fixes_the_problem_of_my_likes/",
 		URL:       "http://www.example.com",
+		Domain:    "example.com",
 
 		Title: "Test to see if this fixes the problem of my \"likes\" from the last 7 months vanishing.",
 

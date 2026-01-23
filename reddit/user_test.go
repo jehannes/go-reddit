@@ -54,6 +54,7 @@ var expectedPost = &Post{
 
 	Permalink: "/r/redditdev/comments/gczwql/get_userusernamegilded_does_it_return_other_users/",
 	URL:       "https://www.reddit.com/r/redditdev/comments/gczwql/get_userusernamegilded_does_it_return_other_users/",
+	Domain:    "self.redditdev",
 
 	Title: "GET /user/{username}/gilded: does it return other user's things you've gilded, or your things that have been gilded? Does it return both comments and posts?",
 	Body:  "Talking about [this](https://www.reddit.com/dev/api/#GET_user_{username}_{where}) endpoint specifically.\n\nI'm building a Reddit API client, but don't have gold.",
