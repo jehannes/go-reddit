@@ -63,6 +63,8 @@ var expectedWikiPageDiscussions = []*Post{
 
 		Likes: Bool(true),
 
+		Awards: []Award{},
+
 		Score:            1,
 		UpvoteRatio:      1,
 		NumberOfComments: 0,

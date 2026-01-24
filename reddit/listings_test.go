@@ -21,8 +21,9 @@ var expectedListingPosts = []*Post{
 		URL:       "https://www.reddit.com/r/test/comments/i2gvg4/this_is_a_title/",
 		Domain:    "self.test",
 
-		Title: "This is a title",
-		Body:  "This is some text",
+		Title:    "This is a title",
+		Body:     "This is some text",
+		BodyHtml: "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;This is some text&lt;/p&gt;\n&lt;/div&gt;&lt;!-- SC_ON --&gt;",
 
 		Likes:            Bool(true),
 		Score:            1,
@@ -39,6 +40,8 @@ var expectedListingPosts = []*Post{
 
 		IsSelfPost:      true,
 		IsCrosspostable: true,
+
+		Awards: []Award{},
 	},
 }
 
@@ -68,6 +71,8 @@ var expectedListingComments = []*Comment{
 		PostID: "t3_i2gvg4",
 
 		IsSubmitter: true,
+
+		Awards: []Award{},
 	},
 }
 
@@ -99,10 +104,14 @@ var expectedListingPosts2 = []*Post{
 		URL:       "https://www.reddit.com/r/test/comments/i2gvg4/this_is_a_title/",
 		Domain:    "self.test",
 
-		Title: "This is a title",
-		Body:  "This is some text",
+		Title:    "This is a title",
+		Body:     "This is some text",
+		BodyHtml: "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;This is some text&lt;/p&gt;\n&lt;/div&gt;&lt;!-- SC_ON --&gt;",
 
-		Likes:            Bool(true),
+		Likes: Bool(true),
+
+		Awards: []Award{},
+
 		Score:            1,
 		UpvoteRatio:      1,
 		NumberOfComments: 1,
@@ -130,7 +139,10 @@ var expectedListingPosts2 = []*Post{
 
 		Title: "This is a title",
 
-		Likes:            Bool(true),
+		Likes: Bool(true),
+
+		Awards: []Award{},
+
 		Score:            1,
 		UpvoteRatio:      1,
 		NumberOfComments: 0,

@@ -35,6 +35,8 @@ var expectedCommentSubmitOrEdit = &Comment{
 	Edited:  &Timestamp{time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)},
 
 	PostID: "t3_link1",
+
+	Awards: []Award{},
 }
 
 func TestCommentService_Submit(t *testing.T) {

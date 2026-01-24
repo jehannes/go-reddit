@@ -389,6 +389,17 @@ func (l *trophyList) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// Award is an award given to a post or comment
+type Award struct {
+	ID          string `json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+	SubredditID string `json:"subreddit_id,omitempty"`
+	Count       int    `json:"count,omitempty"`
+	CoinPrice   int    `json:"coin_price,omitempty"`
+	IconURL     string `json:"icon_url,omitempty"`
+}
+
+
 // Comment is a comment posted by a user.
 type Comment struct {
 	ID      string     `json:"id,omitempty"`
@@ -433,6 +444,8 @@ type Comment struct {
 	Locked      bool `json:"locked"`
 	CanGild     bool `json:"can_gild"`
 	NSFW        bool `json:"over_18"`
+
+	Awards 			[]Award `json:"all_awardings,omitempty"`
 
 	Replies Replies `json:"replies"`
 }
@@ -592,6 +605,7 @@ type Post struct {
 
 	Title    string `json:"title,omitempty"`
 	Body     string `json:"selftext,omitempty"`
+	BodyHtml string `json:"selftext_html,omitempty"`
 	PostHint string `json:"post_hint,omitempty"`
 
 	Flair                 string  `json:"link_flair_text,omitempty"`
@@ -600,6 +614,7 @@ type Post struct {
 	AuthorFlair           *string `json:"author_flair_text"`
 	AuthorFlairTemplateID *string `json:"author_flair_template_id"`
 	AuthorFlairCSSClass   *string `json:"author_flair_css_class"`
+	Awards          			[]Award `json:"all_awardings,omitempty"`
 
 	// Indicates if you've upvoted/downvoted (true/false).
 	// If neither, it will be nil.

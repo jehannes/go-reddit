@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v6
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Test
         run: |
@@ -19,7 +19,7 @@ jobs:
           make test-coverage
 
       - name: Upload test coverage report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v6
         with:
           name: test_coverage_report
           path: coverage.html

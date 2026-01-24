@@ -56,10 +56,13 @@ var expectedPost = &Post{
 	URL:       "https://www.reddit.com/r/redditdev/comments/gczwql/get_userusernamegilded_does_it_return_other_users/",
 	Domain:    "self.redditdev",
 
-	Title: "GET /user/{username}/gilded: does it return other user's things you've gilded, or your things that have been gilded? Does it return both comments and posts?",
-	Body:  "Talking about [this](https://www.reddit.com/dev/api/#GET_user_{username}_{where}) endpoint specifically.\n\nI'm building a Reddit API client, but don't have gold.",
+	Title:    "GET /user/{username}/gilded: does it return other user's things you've gilded, or your things that have been gilded? Does it return both comments and posts?",
+	Body:     "Talking about [this](https://www.reddit.com/dev/api/#GET_user_{username}_{where}) endpoint specifically.\n\nI'm building a Reddit API client, but don't have gold.",
+	BodyHtml: "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Talking about &lt;a href=\"https://www.reddit.com/dev/api/#GET_user_%7Busername%7D_%7Bwhere%7D\"&gt;this&lt;/a&gt; endpoint specifically.&lt;/p&gt;\n\n&lt;p&gt;I&amp;#39;m building a Reddit API client, but don&amp;#39;t have gold.&lt;/p&gt;\n&lt;/div&gt;&lt;!-- SC_ON --&gt;",
 
 	Likes: Bool(true),
+
+	Awards: []Award{},
 
 	Score:            9,
 	UpvoteRatio:      0.86,
@@ -108,6 +111,8 @@ var expectedComment = &Comment{
 	PostPermalink:   "https://www.reddit.com/r/apple/comments/d7ejpn/im_giving_away_an_iphone_11_pro_to_a_commenter_at/",
 	PostAuthor:      "iamthatis",
 	PostNumComments: Int(89751),
+
+	Awards: []Award{},
 }
 
 var expectedRelationship = &Relationship{
