@@ -116,6 +116,8 @@ var expectedLiveThreadDiscussions = []*Post{
 
 		Title: "test title",
 
+		Awards: []Award{},
+
 		Score:            22,
 		UpvoteRatio:      0.9,
 		NumberOfComments: 1,
@@ -143,6 +145,8 @@ var expectedLiveThreadDiscussions = []*Post{
 		Domain:    "reddit.com",
 
 		Title: "test title",
+
+		Awards: []Award{},
 
 		Score:            71,
 		UpvoteRatio:      0.97,

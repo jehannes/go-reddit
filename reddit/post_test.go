@@ -21,8 +21,11 @@ var expectedPostAndComments = &PostAndComments{
 		URL:       "https://www.reddit.com/r/test/comments/testpost/test/",
 		Domain:    "self.test",
 
-		Title: "Test",
-		Body:  "Hello",
+		Title:    "Test",
+		Body:     "Hello",
+		BodyHtml: "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Hello&lt;/p&gt;\n&lt;/div&gt;&lt;!-- SC_ON --&gt;",
+
+		Awards: []Award{},
 
 		Score:            1,
 		UpvoteRatio:      1,
@@ -65,6 +68,8 @@ var expectedPostAndComments = &PostAndComments{
 			IsSubmitter: true,
 			CanGild:     true,
 
+			Awards: []Award{},
+
 			Replies: Replies{
 				Comments: []*Comment{
 					{
@@ -91,6 +96,8 @@ var expectedPostAndComments = &PostAndComments{
 
 						IsSubmitter: true,
 						CanGild:     true,
+
+						Awards: []Award{},
 					},
 				},
 			},
@@ -114,10 +121,13 @@ var expectedEditedPost = &Post{
 	URL:       "https://www.reddit.com/r/test/comments/hw6l6a/test_title/",
 	Domain:    "self.test",
 
-	Title: "Test Title",
-	Body:  "this is edited",
+	Title:    "Test Title",
+	Body:     "this is edited",
+	BodyHtml: "<!-- SC_OFF --><div class=\"md\"><p>this is edited</p>\n</div><!-- SC_ON -->",
 
 	Likes: Bool(true),
+
+	Awards: []Award{},
 
 	Score:            1,
 	UpvoteRatio:      1,
@@ -150,6 +160,8 @@ var expectedPost2 = &Post{
 
 	Likes: Bool(true),
 
+	Awards: []Award{},
+
 	Score:            1,
 	UpvoteRatio:      1,
 	NumberOfComments: 0,
@@ -180,6 +192,8 @@ var expectedPostDuplicates = []*Post{
 
 		Likes: nil,
 
+		Awards: []Award{},
+
 		Score:            1,
 		UpvoteRatio:      0.66,
 		NumberOfComments: 1,
@@ -208,6 +222,8 @@ var expectedPostDuplicates = []*Post{
 		Title: "Test to see if this fixes the problem of my \"likes\" from the last 7 months vanishing.",
 
 		Likes: nil,
+
+		Awards: []Award{},
 
 		Score:            2,
 		UpvoteRatio:      1,

@@ -27,7 +27,10 @@ var expectedPosts = []*Post{
 
 		Title:    "test",
 		Body:     "test",
+		BodyHtml: "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;test&lt;/p&gt;\n&lt;/div&gt;&lt;!-- SC_ON --&gt;",
 		PostHint: "",
+
+		Awards: []Award{},
 
 		Score:            253,
 		UpvoteRatio:      0.99,
@@ -59,6 +62,8 @@ var expectedPosts = []*Post{
 
 		Title:    "Veggies",
 		PostHint: "image",
+
+		Awards: []Award{},
 
 		Score:            4,
 		UpvoteRatio:      1,
@@ -189,6 +194,21 @@ var expectedSearchPosts = []*Post{
 
 		Title:    "Pregnancy test",
 		PostHint: "hosted:video",
+
+		Awards: []Award{
+			{ID: "award_9663243a-e77f-44cf-abc6-850ead2cd18d", Name: "Bravo Grande!", CoinPrice: 75, IconURL: "https://www.redditstatic.com/gold/awards/icon/SnooClappingPremium_512.png", Count: 1},
+			{ID: "award_a2506925-fc82-4d6c-ae3b-b7217e09d7f0", Name: "Narwhal Salute", CoinPrice: 30, IconURL: "https://i.redd.it/award_images/t5_22cerq/80j20o397jj41_NarwhalSalute.png", Count: 1},
+			{ID: "award_b4ff447e-05a5-42dc-9002-63568807cfe6", Name: "All-Seeing Upvote", CoinPrice: 30, IconURL: "https://i.redd.it/award_images/t5_22cerq/rg960rc47jj41_All-SeeingUpvote.png", Count: 2},
+			{ID: "gid_3", Name: "Platinum", CoinPrice: 1800, IconURL: "https://www.redditstatic.com/gold/awards/icon/platinum_512.png", Count: 2},
+			{ID: "gid_2", Name: "Gold", CoinPrice: 500, IconURL: "https://www.redditstatic.com/gold/awards/icon/gold_512.png", Count: 4},
+			{ID: "award_b28d9565-4137-433d-bb65-5d4aa82ade4c", Name: "I'm Deceased", CoinPrice: 200, IconURL: "https://i.redd.it/award_images/t5_22cerq/2jd92wtn25g41_ImDeceased.png", Count: 3},
+			{ID: "award_88fdcafc-57a0-48db-99cc-76276bfaf28b", Name: "Press F", CoinPrice: 150, IconURL: "https://i.redd.it/award_images/t5_22cerq/tcofsbf92md41_PressF.png", Count: 1},
+			{ID: "award_77ba55a2-c33c-4351-ac49-807455a80148", Name: "Bless Up", CoinPrice: 150, IconURL: "https://i.redd.it/award_images/t5_22cerq/trfv6ems1md41_BlessUp.png", Count: 1},
+			{ID: "gid_1", Name: "Silver", CoinPrice: 100, IconURL: "https://www.redditstatic.com/gold/awards/icon/silver_512.png", Count: 1},
+			{ID: "award_7becef23-fb0b-4d62-b8a6-01d5759367cb", Name: "Faith In Humanity Restored", CoinPrice: 70, IconURL: "https://i.redd.it/award_images/t5_22cerq/gva4vt20qc751_FaithInHumanityRestored.png", Count: 1},
+			{ID: "award_02d9ab2c-162e-4c01-8438-317a016ed3d9", Name: "Take My Energy", CoinPrice: 50, IconURL: "https://i.redd.it/award_images/t5_22cerq/898sygoknoo41_TakeMyEnergy.png", Count: 5},
+			{ID: "award_69c94eb4-d6a3-48e7-9cf2-0f39fed8b87c", Name: "Ally", CoinPrice: 50, IconURL: "https://i.redd.it/award_images/t5_22cerq/5nswjpyy44551_Ally.png", Count: 1},
+		},
 
 		Score:            103829,
 		UpvoteRatio:      0.88,
@@ -321,6 +341,33 @@ var expectedSearchPosts = []*Post{
 					ID:       "Ug52cYq0iihKhNVnhJnu_b8ThcVTp27Yjit2korgoUo",
 				},
 			},
+		},
+
+		Awards: []Award{
+			{ID: "award_6001deaa-c9e0-4914-ab3d-7c4a16bd8617", Name: "Fireworks", CoinPrice: 100, IconURL: "https://www.redditstatic.com/gold/awards/icon/Fireworks_512.png", Count: 1},
+			{ID: "award_92cb6518-a71a-4217-9f8f-7ecbd7ab12ba", Name: "Take My Power", CoinPrice: 75, IconURL: "https://www.redditstatic.com/gold/awards/icon/TakeMyPower_512.png", Count: 2},
+			{ID: "award_9663243a-e77f-44cf-abc6-850ead2cd18d", Name: "Bravo Grande!", CoinPrice: 75, IconURL: "https://www.redditstatic.com/gold/awards/icon/SnooClappingPremium_512.png", Count: 1},
+			{ID: "award_c4b2e438-16bb-4568-88e7-7893b7662944", Name: "Wholesome Seal of Approval", CoinPrice: 30, IconURL: "https://i.redd.it/award_images/t5_22cerq/b9ks3a5k7jj41_WholesomeSealofApproval.png", Count: 1},
+			{ID: "award_b4ff447e-05a5-42dc-9002-63568807cfe6", Name: "All-Seeing Upvote", CoinPrice: 30, IconURL: "https://i.redd.it/award_images/t5_22cerq/rg960rc47jj41_All-SeeingUpvote.png", Count: 2},
+			{ID: "award_d48aad4b-286f-4a3a-bb41-ec05b3cd87cc", Name: "Yas Queen", CoinPrice: 250, IconURL: "https://i.redd.it/award_images/t5_22cerq/kthj3e4h3bm41_YasQueen.png", Count: 2},
+			{ID: "gid_3", Name: "Platinum", CoinPrice: 1800, IconURL: "https://www.redditstatic.com/gold/awards/icon/platinum_512.png", Count: 1},
+			{ID: "gid_2", Name: "Gold", CoinPrice: 500, IconURL: "https://www.redditstatic.com/gold/awards/icon/gold_512.png", Count: 3},
+			{ID: "award_43c43a35-15c5-4f73-91ef-fe538426435a", Name: "Bless Up (Pro)", CoinPrice: 500, IconURL: "https://i.redd.it/award_images/t5_22cerq/xe5mw55w5v541_BlessUp.png", Count: 1},
+			{ID: "award_5b39e8fd-7a58-4cbe-8ca0-bdedd5ed1f5a", Name: "Doot 🎵 Doot", CoinPrice: 400, IconURL: "https://www.redditstatic.com/gold/awards/icon/Updoot_512.png", Count: 6},
+			{ID: "award_725b427d-320b-4d02-8fb0-8bb7aa7b78aa", Name: "Updoot", CoinPrice: 300, IconURL: "https://i.redd.it/award_images/t5_22cerq/7atjjqpy1mc41_Updoot.png", Count: 1},
+			{ID: "award_d125d124-5c03-490d-af3d-d07c462003da", Name: "Stonks Rising", CoinPrice: 200, IconURL: "https://i.redd.it/award_images/t5_22cerq/s5edqq9abef41_StonksRising.png", Count: 2},
+			{ID: "award_b28d9565-4137-433d-bb65-5d4aa82ade4c", Name: "I'm Deceased", CoinPrice: 200, IconURL: "https://i.redd.it/award_images/t5_22cerq/2jd92wtn25g41_ImDeceased.png", Count: 7},
+			{ID: "award_88fdcafc-57a0-48db-99cc-76276bfaf28b", Name: "Press F", CoinPrice: 150, IconURL: "https://i.redd.it/award_images/t5_22cerq/tcofsbf92md41_PressF.png", Count: 4},
+			{ID: "award_5f123e3d-4f48-42f4-9c11-e98b566d5897", Name: "Wholesome", CoinPrice: 125, IconURL: "https://i.redd.it/award_images/t5_22cerq/5izbv4fn0md41_Wholesome.png", Count: 5},
+			{ID: "gid_1", Name: "Silver", CoinPrice: 100, IconURL: "https://www.redditstatic.com/gold/awards/icon/silver_512.png", Count: 2},
+			{ID: "award_99d95969-6100-45b2-b00c-0ec45ae19596", Name: "Snek", CoinPrice: 70, IconURL: "https://i.redd.it/award_images/t5_22cerq/rc5iesz2z8t41_Snek.png", Count: 1},
+			{ID: "award_7becef23-fb0b-4d62-b8a6-01d5759367cb", Name: "Faith In Humanity Restored", CoinPrice: 70, IconURL: "https://i.redd.it/award_images/t5_22cerq/gva4vt20qc751_FaithInHumanityRestored.png", Count: 2},
+			{ID: "award_b1b44fa1-8179-4d84-a9ed-f25bb81f1c5f", Name: "Facepalm", CoinPrice: 70, IconURL: "https://i.redd.it/award_images/t5_22cerq/ey2iodron2s41_Facepalm.png", Count: 3},
+			{ID: "award_02d9ab2c-162e-4c01-8438-317a016ed3d9", Name: "Take My Energy", CoinPrice: 50, IconURL: "https://i.redd.it/award_images/t5_22cerq/898sygoknoo41_TakeMyEnergy.png", Count: 2},
+			{ID: "award_fcccaa58-8f63-4d9d-9251-81033cd0daa3", Name: "Nothing To Do", CoinPrice: 50, IconURL: "https://i.redd.it/award_images/t5_22cerq/1snr345pm1w41_NothingToDo.png", Count: 1},
+			{ID: "award_cc091963-e271-45aa-ba23-b5150e565520", Name: "Safe &amp; Social", CoinPrice: 30, IconURL: "https://i.redd.it/award_images/t5_22cerq/qq73pijkm3p41_SafeSocial.png", Count: 1},
+			{ID: "award_3cf96da4-79da-4127-90ac-84545e1833dc", Name: "Home Time", CoinPrice: 30, IconURL: "https://i.redd.it/award_images/t5_22cerq/qh4pzo76v9p41_HomeTime.png", Count: 2},
+			{ID: "award_a903c949-ccc5-420d-8239-1bbefc424838", Name: "Healthcare Hero", CoinPrice: 30, IconURL: "https://i.redd.it/award_images/t5_22cerq/xs2na1t1v9p41_HealthcareHero.png", Count: 7},
 		},
 	},
 }
