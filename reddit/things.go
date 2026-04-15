@@ -399,7 +399,6 @@ type Award struct {
 	IconURL     string `json:"icon_url,omitempty"`
 }
 
-
 // Comment is a comment posted by a user.
 type Comment struct {
 	ID      string     `json:"id,omitempty"`
@@ -445,7 +444,7 @@ type Comment struct {
 	CanGild     bool `json:"can_gild"`
 	NSFW        bool `json:"over_18"`
 
-	Awards 			[]Award `json:"all_awardings,omitempty"`
+	Awards []Award `json:"all_awardings,omitempty"`
 
 	Replies Replies `json:"replies"`
 }
@@ -614,7 +613,7 @@ type Post struct {
 	AuthorFlair           *string `json:"author_flair_text"`
 	AuthorFlairTemplateID *string `json:"author_flair_template_id"`
 	AuthorFlairCSSClass   *string `json:"author_flair_css_class"`
-	Awards          			[]Award `json:"all_awardings,omitempty"`
+	Awards                []Award `json:"all_awardings,omitempty"`
 
 	// Indicates if you've upvoted/downvoted (true/false).
 	// If neither, it will be nil.
@@ -650,9 +649,13 @@ type Post struct {
 	ApprovedBy    *string `json:"approved_by"`
 	ApprovedAtUTC *int64  `json:"approved_at_utc"`
 
-	Removed     *bool   `json:"removed,omitempty"`
-	RemovedBy   *string `json:"removed_by"`
-	ModReasonBy *string `json:"mod_reason_by"`
+	Removed   *bool   `json:"removed,omitempty"`
+	RemovedBy *string `json:"removed_by"`
+	// RemovedByCategory indicates why a post was removed.
+	// Known values are "reddit" (admin/DMCA removal) and "moderator" (subreddit mod action).
+	// It is nil for non-removed posts or when the field is absent from the API response.
+	RemovedByCategory *string `json:"removed_by_category"`
+	ModReasonBy       *string `json:"mod_reason_by"`
 
 	// Gallery related fields
 	IsGallery     bool                          `json:"is_gallery"`
