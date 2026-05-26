@@ -11,43 +11,43 @@ import (
 )
 
 func TestWithHTTPClient(t *testing.T) {
-	_, err := NewClient(Credentials{}, WithHTTPClient(nil))
+	_, err := NewClient(Credentials{ID: "id1", Secret: "secret1"}, WithHTTPClient(nil))
 	require.EqualError(t, err, "*http.Client: cannot be nil")
 
-	_, err = NewClient(Credentials{}, WithHTTPClient(&http.Client{}))
+	_, err = NewClient(Credentials{ID: "id1", Secret: "secret1"}, WithHTTPClient(&http.Client{}))
 	require.NoError(t, err)
 }
 
 func TestWithUserAgent(t *testing.T) {
-	c, err := NewClient(Credentials{}, WithUserAgent("test"))
+	c, err := NewClient(Credentials{ID: "id1", Secret: "secret1"}, WithUserAgent("test"))
 	require.NoError(t, err)
 	require.Equal(t, "test", c.UserAgent())
 
-	c, err = NewClient(Credentials{}, WithUserAgent(""))
+	c, err = NewClient(Credentials{ID: "id1", Secret: "secret1"}, WithUserAgent(""))
 	require.NoError(t, err)
 	require.Equal(t, fmt.Sprintf("golang:%s:v%s", libraryName, libraryVersion), c.UserAgent())
 }
 
 func TestWithBaseURL(t *testing.T) {
-	c, err := NewClient(Credentials{}, WithBaseURL(":"))
+	c, err := NewClient(Credentials{ID: "id1", Secret: "secret1"}, WithBaseURL(":"))
 	urlErr, ok := err.(*url.Error)
 	require.True(t, ok)
 	require.Equal(t, "parse", urlErr.Op)
 
 	baseURL := "http://localhost:8080"
-	c, err = NewClient(Credentials{}, WithBaseURL(baseURL))
+	c, err = NewClient(Credentials{ID: "id1", Secret: "secret1"}, WithBaseURL(baseURL))
 	require.NoError(t, err)
 	require.Equal(t, baseURL, c.BaseURL.String())
 }
 
 func TestWithTokenURL(t *testing.T) {
-	c, err := NewClient(Credentials{}, WithTokenURL(":"))
+	c, err := NewClient(Credentials{ID: "id1", Secret: "secret1"}, WithTokenURL(":"))
 	urlErr, ok := err.(*url.Error)
 	require.True(t, ok)
 	require.Equal(t, "parse", urlErr.Op)
 
 	tokenURL := "http://localhost:8080/api/v1/access_token"
-	c, err = NewClient(Credentials{}, WithTokenURL(tokenURL))
+	c, err = NewClient(Credentials{ID: "id1", Secret: "secret1"}, WithTokenURL(tokenURL))
 	require.NoError(t, err)
 	require.Equal(t, tokenURL, c.TokenURL.String())
 }
@@ -65,7 +65,7 @@ func TestFromEnv(t *testing.T) {
 	os.Setenv("GO_REDDIT_CLIENT_PASSWORD", "password1")
 	defer os.Unsetenv("GO_REDDIT_CLIENT_PASSWORD")
 
-	c, err := NewClient(Credentials{}, FromEnv)
+	c, err := NewClient(Credentials{ID: "id1", Secret: "secret1"}, FromEnv)
 	require.NoError(t, err)
 	require.Equal(t, "id1", c.ID)
 	require.Equal(t, "secret1", c.Secret)

@@ -98,20 +98,20 @@ func testClientDefaults(t *testing.T, c *Client) {
 }
 
 func TestNewClient(t *testing.T) {
-	c, err := NewClient(Credentials{})
+	c, err := NewClient(Credentials{ID: "id1", Secret: "secret1"})
 	require.NoError(t, err)
 	testClientDefaults(t, c)
 }
 
 func TestNewClient_Error(t *testing.T) {
-	_, err := NewClient(Credentials{})
+	_, err := NewClient(Credentials{ID: "id1", Secret: "secret1"})
 	require.NoError(t, err)
 
 	errorOpt := func(c *Client) error {
 		return errors.New("foo")
 	}
 
-	_, err = NewClient(Credentials{}, errorOpt)
+	_, err = NewClient(Credentials{ID: "id1", Secret: "secret1"}, errorOpt)
 	require.EqualError(t, err, "foo")
 }
 

@@ -15,7 +15,6 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
-	"golang.org/x/oauth2"
 )
 
 const (
@@ -95,8 +94,6 @@ type Client struct {
 	Widget     *WidgetService
 	Wiki       *WikiService
 
-	oauth2Transport *oauth2.Transport
-
 	onRequestCompleted RequestCompletionCallback
 }
 
@@ -136,9 +133,16 @@ func newClient() *Client {
 
 // NewClient returns a new Reddit API client.
 // Use an Opt to configure the client credentials, such as WithHTTPClient or WithUserAgent.
-// If the FromEnv option is used with the correct environment variables, an empty struct can
-// be passed in as the credentials, since they will be overridden.
+// Credentials must include at minimum a non-empty ID and Secret. If Username and Password
+// are both empty, the client uses the client_credentials grant (application-only OAuth).
+// If all four fields are provided, the client uses the password grant.
 func NewClient(credentials Credentials, opts ...Opt) (*Client, error) {
+	// 1. Validate credentials
+	if err := validateCredentials(credentials); err != nil {
+		return nil, err
+	}
+
+	// 2. Build client
 	client := newClient()
 
 	client.ID = credentials.ID
@@ -146,24 +150,31 @@ func NewClient(credentials Credentials, opts ...Opt) (*Client, error) {
 	client.Username = credentials.Username
 	client.Password = credentials.Password
 
+	// 3. Apply options
 	for _, opt := range opts {
 		if err := opt(client); err != nil {
 			return nil, err
 		}
 	}
 
+	// 4. User-agent transport
 	userAgentTransport := &userAgentTransport{
 		userAgent: client.UserAgent(),
 		Base:      client.client.Transport,
 	}
 	client.client.Transport = userAgentTransport
 
+	// 5. Redirect check
 	if client.client.CheckRedirect == nil {
 		client.client.CheckRedirect = client.redirect
 	}
 
-	oauthTransport := oauthTransport(client)
-	client.client.Transport = oauthTransport
+	// 6. Select OAuth transport based on credentials
+	if client.Username == "" && client.Password == "" {
+		client.client.Transport = clientCredentialsTransport(client)
+	} else {
+		client.client.Transport = oauthTransport(client)
+	}
 
 	return client, nil
 }

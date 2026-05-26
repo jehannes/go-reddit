@@ -35,10 +35,23 @@ package reddit
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/clientcredentials"
 )
+
+func validateCredentials(creds Credentials) error {
+	if creds.ID == "" || creds.Secret == "" {
+		return errors.New("credentials: client ID and secret are required")
+	}
+	if (creds.Username != "" && creds.Password == "") ||
+		(creds.Username == "" && creds.Password != "") {
+		return errors.New("credentials: both username and password must be provided together")
+	}
+	return nil
+}
 
 type oauthTokenSource struct {
 	ctx                context.Context
@@ -69,6 +82,25 @@ func oauthTransport(client *Client) http.RoundTripper {
 		username: client.Username,
 		password: client.Password,
 	})
+
+	return &oauth2.Transport{
+		Source: tokenSource,
+		Base:   client.client.Transport,
+	}
+}
+
+func clientCredentialsTransport(client *Client) http.RoundTripper {
+	httpClient := &http.Client{Transport: client.client.Transport}
+	ctx := context.WithValue(context.Background(), oauth2.HTTPClient, httpClient)
+
+	config := &clientcredentials.Config{
+		ClientID:     client.ID,
+		ClientSecret: client.Secret,
+		TokenURL:     client.TokenURL.String(),
+		AuthStyle:    oauth2.AuthStyleInHeader,
+	}
+
+	tokenSource := config.TokenSource(ctx)
 
 	return &oauth2.Transport{
 		Source: tokenSource,
