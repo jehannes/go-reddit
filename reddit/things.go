@@ -642,6 +642,13 @@ type Post struct {
 	IsCrosspostable bool  `json:"is_crosspostable"`
 	Spam            *bool `json:"spam,omitempty"`
 
+	// Pinned reports whether the post is pinned to its author's profile.
+	// This is distinct from Stickied, which reports a subreddit sticky.
+	// Reddit only ever sets this to true in user listings (e.g. UserService.Overview,
+	// UserService.Posts); the same post fetched from a subreddit or post listing
+	// reports false even when it is in fact pinned to the author's profile.
+	Pinned bool `json:"pinned"`
+
 	CanModPost    bool    `json:"can_mod_post"`
 	Distinguished *string `json:"distinguished"`
 

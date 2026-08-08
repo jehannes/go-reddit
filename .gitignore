@@ -6,3 +6,4 @@
 coverage.html
 .kiro/**/*
 devDocs/**/*
+test_pocs/**/*
