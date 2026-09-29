@@ -11,12 +11,20 @@ import (
 type Opt func(*Client) error
 
 // WithHTTPClient sets the HTTP client which will be used to make requests.
+// The client is copied, so the caller's *http.Client is never modified and can
+// safely be shared between multiple reddit clients. Its Transport, Jar, Timeout
+// and CheckRedirect are carried over; the Transport itself is shared, not copied,
+// so its connection pool is reused.
 func WithHTTPClient(httpClient *http.Client) Opt {
 	return func(c *Client) error {
 		if httpClient == nil {
 			return errors.New("*http.Client: cannot be nil")
 		}
-		c.client = httpClient
+		// Shallow copy: NewClient wraps Transport and may set CheckRedirect on
+		// c.client, and doing that on the caller's instance stacked one reddit
+		// client's oauth2 transport underneath the next one's.
+		clientCopy := *httpClient
+		c.client = &clientCopy
 		return nil
 	}
 }
