@@ -562,7 +562,7 @@ type Media struct {
 type RedditVideo struct {
 	BitrateKbps       int    `json:"bitrate_kbps"`
 	FallbackURL       string `json:"fallback_url"`
-	HasAudio          bool   `json:"has_audio"`
+	HasAudio          *bool  `json:"has_audio"` // nil when Reddit omits the field (e.g. post mgu42r)
 	Height            int    `json:"height"`
 	Width             int    `json:"width"`
 	ScrubberMediaURL  string `json:"scrubber_media_url"`

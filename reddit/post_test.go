@@ -1,6 +1,7 @@
 package reddit
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -1188,7 +1189,7 @@ func TestPostService_GetWithMedia(t *testing.T) {
 	rv := post.Post.Media.RedditVideo
 	require.Equal(t, 2400, rv.BitrateKbps)
 	require.Equal(t, "https://v.redd.it/n8h8hskhr0cg1/CMAF_720.mp4?source=fallback", rv.FallbackURL)
-	require.Equal(t, true, rv.HasAudio)
+	require.Equal(t, Bool(true), rv.HasAudio)
 	require.Equal(t, 1280, rv.Height)
 	require.Equal(t, 720, rv.Width)
 	require.Equal(t, "https://v.redd.it/n8h8hskhr0cg1/CMAF_96.mp4", rv.ScrubberMediaURL)
@@ -1197,6 +1198,34 @@ func TestPostService_GetWithMedia(t *testing.T) {
 	require.Contains(t, rv.HLSURL, "https://v.redd.it/n8h8hskhr0cg1/HLSPlaylist.m3u8")
 	require.Equal(t, false, rv.IsGif)
 	require.Equal(t, "completed", rv.TranscodingStatus)
+}
+
+// Some reddit_video objects omit has_audio entirely (e.g. post mgu42r), so a
+// missing field must stay distinguishable from an explicit false.
+func TestRedditVideo_HasAudioPresence(t *testing.T) {
+	tests := []struct {
+		name string
+		json string
+		want *bool
+	}{
+		{name: "missing", json: `{"bitrate_kbps": 2400}`, want: nil},
+		{name: "null", json: `{"has_audio": null}`, want: nil},
+		{name: "true", json: `{"has_audio": true}`, want: Bool(true)},
+		{name: "false", json: `{"has_audio": false}`, want: Bool(false)},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var rv RedditVideo
+			require.NoError(t, json.Unmarshal([]byte(tt.json), &rv))
+			if tt.want == nil {
+				require.Nil(t, rv.HasAudio)
+				return
+			}
+			require.NotNil(t, rv.HasAudio)
+			require.Equal(t, *tt.want, *rv.HasAudio)
+		})
+	}
 }
 
 func TestPostService_GetWithOembed(t *testing.T) {
